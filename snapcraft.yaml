@@ -1,0 +1,75 @@
+name: pyright
+version: 1.1.155
+summary: Static type checker for Python
+description: |
+  = Speed =
+  Pyright is a fast type checker meant for large Python source
+  bases. It can run in a “watch” mode and performs fast incremental updates
+  when files are modified.
+
+  = Configurability =
+
+  Pyright supports configuration files that provide granular control over
+  settings. Different “execution environments” can be associated with
+  subdirectories within a source base. Each environment can specify
+  different module search paths, python language versions, and platform
+  targets.
+
+  Type Checking Features
+    - PEP 484 type hints including generics
+    - PEP 487 simpler customization of class creation
+    - PEP 526 syntax for variable annotations
+    - PEP 544 structural subtyping
+    - PEP 561 distributing and packaging type information
+    - PEP 563 postponed evaluation of annotations
+    - PEP 585 type hinting generics in standard collections
+    - PEP 586 literal types
+    - PEP 589 typed dictionaries
+    - PEP 591 final qualifier
+    - PEP 593 flexible variable annotations
+    - PEP 604 complementary syntax for unions
+    - PEP 612 parameter specification variables
+    - PEP 613 explicit type aliases
+    - PEP 635 structural pattern matching
+    - PEP 637 indexing with keyword arguments
+    - PEP 646 variadic generics
+    - PEP 647 user-defined type guards
+    - PEP 655 required typed dictionary items
+    - Type inference for function return values, instance variables, class variables, and globals
+    - Type guards that understand conditional code flow constructs like if/else statements
+
+grade: stable
+confinement: strict
+base: core20
+
+apps:
+  pyright:
+    command: bin/pyright
+    plugs:
+      - network
+      - home
+  pyright-langserver:
+    command: bin/pyright-langserver
+    plugs:
+      - network
+      - home
+
+parts:
+  pyright:
+    plugin: npm
+    source: https://github.com/microsoft/pyright.git
+    source-tag: $SNAPCRAFT_PROJECT_VERSION
+    source-subdir: packages/pyright
+    npm-node-version: 14.17.2
+    build-packages:
+      - npm
+    override-build: |
+      npm install
+      cd packages/pyright-internal
+      npm install
+      cd ../pyright
+      npm install
+      npm run build
+      cd ../..
+      cp -r packages/pyright/dist $SNAPCRAFT_PART_INSTALL
+      snapcraftctl build
