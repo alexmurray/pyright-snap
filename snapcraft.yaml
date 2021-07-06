@@ -43,20 +43,14 @@ description: |
     if/else statements
 
 grade: stable
-confinement: strict
+confinement: classic
 base: core20
 
 apps:
   pyright:
     command: bin/pyright
-    plugs:
-      - network
-      - home
   pyright-langserver:
     command: bin/pyright-langserver
-    plugs:
-      - network
-      - home
 
 parts:
   pyright:
