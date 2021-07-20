@@ -58,10 +58,12 @@ parts:
     source: https://github.com/microsoft/pyright.git
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-subdir: packages/pyright
-    npm-node-version: 14.17.2
-    build-packages:
-      - npm
+    npm-node-version: 14.17.3
     override-build: |
+      # install the official nodejs so we get the expected npm version
+      curl -s https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-x64.tar.gz | tar xzf - -C "$SNAPCRAFT_PART_INSTALL" --strip-components=1
+      npm config set user 0
+      npm config set unsafe-perm true
       npm install
       cd packages/pyright-internal
       npm install
