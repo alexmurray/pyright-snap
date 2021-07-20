@@ -61,7 +61,16 @@ parts:
     npm-node-version: 14.17.3
     override-build: |
       # install the official nodejs so we get the expected npm version
-      curl -s https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-x64.tar.gz | tar xzf - -C "$SNAPCRAFT_PART_INSTALL" --strip-components=1
+      if [ $SNAP_ARCH == "amd64" ]; then
+        ARCH=x64
+      elif [ $SNAP_ARCH == "armhf" ]; then
+        ARCH=armv7l
+      elif [ $SNAP_ARCH == "ppc64el" ]; then
+        ARCH=ppc64le
+      else
+        ARCH=$SNAP_ARCH
+      fi
+      curl -s https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-$ARCH.tar.gz | tar xzf - -C "$SNAPCRAFT_PART_INSTALL" --strip-components=1
       npm config set user 0
       npm config set unsafe-perm true
       npm install
