@@ -48,9 +48,9 @@ base: core20
 
 apps:
   pyright:
-    command: bin/pyright
+    command: bin/node $SNAP/bin/pyright
   pyright-langserver:
-    command: bin/pyright-langserver
+    command: bin/node $SNAP/bin/pyright-langserver
 
 parts:
   pyright:
