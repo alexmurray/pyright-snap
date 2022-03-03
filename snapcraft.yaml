@@ -58,9 +58,9 @@ parts:
     source: https://github.com/microsoft/pyright.git
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-subdir: packages/pyright
-    npm-node-version: 16.14.0
     build-environment:
       - NODEJS_VERSION: "v16.14.0"
+    npm-node-version: $NODEJS_VERSION
     override-build: |
       # install the official nodejs so we get the expected npm version
       if [ $SNAP_ARCH == "amd64" ]; then
