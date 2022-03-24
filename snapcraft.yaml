@@ -45,6 +45,8 @@ description: |
 grade: stable
 confinement: classic
 base: core20
+architectures:
+  - build-on: [amd64, arm64]
 
 apps:
   pyright:
@@ -61,8 +63,6 @@ parts:
     build-environment:
       - NODEJS_VERSION: "v16.14.0"
     npm-node-version: $NODEJS_VERSION
-    build-packages:
-      - pkg-config
     override-build: |
       # install the official nodejs so we get the expected npm version
       if [ $SNAP_ARCH == "amd64" ]; then
