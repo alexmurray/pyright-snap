@@ -87,7 +87,7 @@ parts:
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-subdir: packages/pyright
     build-environment:
-      - NODEJS_VERSION: "v16.14.0"
+      - NODEJS_VERSION: "v16.16.0"
     npm-node-version: $NODEJS_VERSION
     override-build: |
       # install the official nodejs so we get the expected npm version
