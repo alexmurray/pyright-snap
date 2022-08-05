@@ -89,6 +89,11 @@ parts:
     build-environment:
       - NODEJS_VERSION: "v16.16.0"
     npm-node-version: $NODEJS_VERSION
+    build-packages:
+      - pkg-config
+      - libsecret-1-dev
+    stage-packages:
+      - libsecret-1-0
     override-build: |
       # install the official nodejs so we get the expected npm version
       if [ $SNAP_ARCH == "amd64" ]; then
