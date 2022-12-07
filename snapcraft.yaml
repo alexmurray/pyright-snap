@@ -1,5 +1,5 @@
 name: pyright
-version: 1.1.282
+version: 1.1.283
 summary: Static type checker for Python
 description: |
   ** Speed **
