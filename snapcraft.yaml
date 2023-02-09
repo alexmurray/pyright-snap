@@ -106,14 +106,9 @@ parts:
         ARCH=$SNAP_ARCH
       fi
       curl -s https://nodejs.org/dist/"${NODEJS_VERSION}"/node-"${NODEJS_VERSION}"-linux-$ARCH.tar.gz | tar xzf - -C "$SNAPCRAFT_PART_INSTALL" --strip-components=1
-      npm config set user 0
-      npm config set unsafe-perm true
       npm install
-      cd packages/pyright-internal
-      npm install
-      cd ../pyright
+      cd packages/pyright
       npm install
       npm run build
-      cd ../..
-      cp -r packages/pyright/dist $SNAPCRAFT_PART_INSTALL
-      snapcraftctl build
+      cp -r dist $SNAPCRAFT_PART_INSTALL
+      npm install -g --prefix "${SNAPCRAFT_PART_INSTALL}" $(npm pack . | tail -1)
