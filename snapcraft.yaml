@@ -72,7 +72,7 @@ description: |
 
 grade: stable
 confinement: classic
-base: core20
+base: core24
 
 apps:
   pyright:
@@ -86,26 +86,21 @@ parts:
     source: https://github.com/microsoft/pyright.git
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-subdir: packages/pyright
-    build-environment:
-      - NODEJS_VERSION: "v20.18.0"
-    npm-node-version: $NODEJS_VERSION
+    npm-node-version: "20.18.0"
+    npm-include-node: true
     build-packages:
       - pkg-config
       - libsecret-1-dev
     stage-packages:
       - libsecret-1-0
     override-build: |
-      # install the official nodejs so we get the expected npm version
-      if [ $SNAP_ARCH == "amd64" ]; then
-        ARCH=x64
-      elif [ $SNAP_ARCH == "armhf" ]; then
-        ARCH=armv7l
-      elif [ $SNAP_ARCH == "ppc64el" ]; then
-        ARCH=ppc64le
-      else
-        ARCH=$SNAP_ARCH
-      fi
-      curl -s https://nodejs.org/dist/"${NODEJS_VERSION}"/node-"${NODEJS_VERSION}"-linux-$ARCH.tar.gz | tar xzf - -C "$SNAPCRAFT_PART_INSTALL" --strip-components=1
+      export NODE_ENV=
+      craftctl default
+      npm install -g cross-env
+      npm install -g lerna
+      npm install -g webpack
+      npm install -g webpack-cli
+      npm install -g copy-webpack-plugin
       npm install
       cd packages/pyright
       npm install
