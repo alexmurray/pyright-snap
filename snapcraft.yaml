@@ -86,7 +86,7 @@ parts:
     source: https://github.com/microsoft/pyright.git
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     source-subdir: packages/pyright
-    npm-node-version: "20.18.0"
+    npm-node-version: 22.12.0
     npm-include-node: true
     build-packages:
       - pkg-config
