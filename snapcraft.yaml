@@ -96,14 +96,9 @@ parts:
     override-build: |
       export NODE_ENV=
       craftctl default
-      npm install -g cross-env
-      npm install -g lerna
-      npm install -g webpack
-      npm install -g webpack-cli
-      npm install -g copy-webpack-plugin
-      npm install
+      npm install -g pnpm@$(node -p "require('./package.json').packageManager.split('@')[1]")
+      pnpm install --frozen-lockfile
       cd packages/pyright
-      npm install
-      npm run build
+      pnpm run build
       cp -r dist $SNAPCRAFT_PART_INSTALL
       npm install -g --prefix "${SNAPCRAFT_PART_INSTALL}" $(npm pack . | tail -1)
